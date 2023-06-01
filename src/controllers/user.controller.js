@@ -1,7 +1,17 @@
-const soma = (req,res) => {
-  const soma = 1002+1;
+const create = (req,res)  => {
+  const {nome,email,senha} = req.body;
 
-  res.send({soma: soma});
+  if (!nome || !email || !senha ) {
+    res.status(400).send({mensagem:"Envie todos os campos para registrar"})
+  }
+
+  res.status(201).send({
+    mensagem:"Usuario criado com sucesso",
+    usuario:{
+      nome,
+      email
+    }
+  });
 };
-
-module.exports = { soma };
+  
+module.exports = { create };
