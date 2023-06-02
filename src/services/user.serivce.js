@@ -1,7 +1,19 @@
 const User =  require('../models/User');
 
-const create = (body) => User.create(body);
+const createService = (body) => User.create(body);
+
+const findAllService = () => User.find();
+
+const findByIdService = (id) => User.findById(id);
+
+const updateService = (id,nome,email,senha) => User.findOneAndUpdate({_id: id},{nome,email,senha});
+
+const deleteService = (id) => User.deleteOne({_id: id});
 
 module.exports = {
-  create,
+  createService,
+  findAllService,
+  findByIdService,
+  updateService,
+  deleteService,
 };
