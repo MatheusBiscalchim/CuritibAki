@@ -1,5 +1,4 @@
 const userSerivce = require('../services/user.serivce');
-const mongoose = require('mongoose');
 
 const create = async(req,res)  => {
   const {nome,email,senha} = req.body;
@@ -36,19 +35,18 @@ const findAll = async(req,res)  => {
 
 const findById = async(req,res) => {
   const id = req.params.id;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Id inválido" });
-  }
-
+  
   const user = await userSerivce.findByIdService(id);
 
-  if (!user) {
-    return res.status(400).send({ message: "Usuario não encontrado" });
-  }
-  const {_id,nome,email} = user;
+  res.send(user);
+};
 
-  res.send({_id,nome,email});
+const findByEmail = async(req,res) => {
+  const email = req.params.email;
+  
+  const user = await userSerivce.findByEmailService({email:email});
+
+  res.send(user);
 };
 
 const update = async(req,res) => {
@@ -59,16 +57,6 @@ const update = async(req,res) => {
   }
 
   const id = req.params.id;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Id inválido" });
-  }
-
-  const user = await userSerivce.findByIdService(id);
-
-  if (!user) {
-    return res.status(400).send({ message: "Usuario não encontrado" });
-  }
 
   await userSerivce.updateService(
     id,
@@ -83,13 +71,9 @@ const update = async(req,res) => {
 const deleteById = async(req,res) => {
   const id = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Id inválido" });
-  }
-
   await userSerivce.deleteService(id);
 
   res.status(200).send({message:"Usuario deletado com sucesso"})
 };
 
-module.exports = { create, findAll, findById, update, deleteById };
+module.exports = { create, findAll, findById, findByEmail, update, deleteById };
