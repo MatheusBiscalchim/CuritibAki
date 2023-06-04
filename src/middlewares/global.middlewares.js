@@ -1,18 +1,23 @@
-const mongoose = require('mongoose');
-const userSerivce = require('../services/user.serivce');
+import mongoose from 'mongoose';
+import userSerivce from '../services/user.serivce.js';
 
-const validId = (req,res,next) => {
-  const id = req.params.id;
+export const validId = (req,res,next) => {
+  try{const id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({ message: "Id inválido" });
   }
 
+  req.id = id;
+
   next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
-const validEmail = async (req,res,next) => {
-  const email = req.params.email;
+export const validEmail = async (req,res,next) => {
+  try{const email = req.params.email;
 
   const user=await userSerivce.findByEmailService({email:email});
 
@@ -20,11 +25,17 @@ const validEmail = async (req,res,next) => {
     return res.status(400).send({ message: "Email não encontrado" });
   }
 
+  req.email = email;
+  req.user = user;
+
   next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
-const validUser = async (req,res,next) => {
-  const id = req.params.id;
+export const validUser = async (req,res,next) => {
+  try{const id = req.params.id;
  
   const user = await userSerivce.findByIdService(id);
 
@@ -32,7 +43,11 @@ const validUser = async (req,res,next) => {
     return res.status(400).send({ message: "Usuario não encontrado" });
   }
 
-  next();
-};
+  req.id = id;
+  req.user = user;
 
-module.exports = { validId, validUser, validEmail };
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};

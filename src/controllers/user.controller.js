@@ -1,7 +1,8 @@
-const userSerivce = require('../services/user.serivce');
+import userSerivce  from '../services/user.serivce.js';
 
 const create = async(req,res)  => {
-  const {nome,email,senha} = req.body;
+  try{
+    const {nome,email,senha} = req.body;
 
   if (!nome || !email || !senha ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
@@ -21,42 +22,52 @@ const create = async(req,res)  => {
       email
     }
   });
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
   
 const findAll = async(req,res)  => {
-  const users = await userSerivce.findAllService();
+  try{const users = await userSerivce.findAllService();
   
   if(users.length === 0){
     return res.status(400).send({message: "Não há usuarios cadastrados"});
   }
 
   res.send(users)
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
 const findById = async(req,res) => {
-  const id = req.params.id;
-  
-  const user = await userSerivce.findByIdService(id);
+  try{const user = req.user;
 
   res.send(user);
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
 const findByEmail = async(req,res) => {
-  const email = req.params.email;
+  try{const email = req.email;
   
   const user = await userSerivce.findByEmailService({email:email});
 
   res.send(user);
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
 const update = async(req,res) => {
-  const {nome,email,senha} = req.body;
+  try{const {nome,email,senha} = req.body;
 
   if (!nome && !email && !senha ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
-  const id = req.params.id;
+  const {id,user} = req;
 
   await userSerivce.updateService(
     id,
@@ -64,16 +75,26 @@ const update = async(req,res) => {
     email,
     senha
   );
-
+   
   res.send({message:"Usuário atualizado com sucesso"})
+    
+} catch (err) {
+  if(err.message.includes('duplicate key error collection')) {
+    res.status(400).send( {message: 'Este email não pode ser cadastrado tente outro'})
+  } else {
+  res.status(500).send( {message: err.message})}
+}
 };
 
 const deleteById = async(req,res) => {
-  const id = req.params.id;
+  try{const id = req.id;
 
   await userSerivce.deleteService(id);
 
   res.status(200).send({message:"Usuario deletado com sucesso"})
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
 };
 
-module.exports = { create, findAll, findById, findByEmail, update, deleteById };
+export default { create, findAll, findById, findByEmail, update, deleteById };
