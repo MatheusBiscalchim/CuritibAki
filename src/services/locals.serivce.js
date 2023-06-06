@@ -1,14 +1,14 @@
-import User from '../models/User.js';
+import Local from '../models/Locals.js';
 
-const createService = (body) => User.create(body);
+const createService = (body) => Local.create(body);
 
-const findAllService = () => User.find();
+const findAllService = () => Local.find();
 
-const findByIdService = (id) => User.findById(id);
+const findByIdService = (id) => Local.findById(id);
 
-const updateService = (id,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe) => User.findOneAndUpdate({_id: id},{slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe});
+const updateService = (id,nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe) => Local.findOneAndUpdate({_id: id},{nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe});
 
-const deleteService = (id) => User.deleteOne({_id: id});
+const deleteService = (id) => Local.deleteOne({_id: id});
 
 export default {
   createService,

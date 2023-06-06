@@ -48,19 +48,18 @@ const findAll = async(req,res)  => {
 };
 
 const findById = async(req,res) => {
-  try{
-    const locals = req.locals;
+  try{const locals = req.locals;
 
-  res.send(locals);
-} catch (err) {
-  res.status(500).send( {message: err.message})
-}
-};
+    res.send(locals);
+  } catch (err) {
+    res.status(500).send( {message: err.message})
+  }
+  };
 
 const update = async(req,res) => {
   try{const {nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;
-
-  if (!nome || !slug || !tipo || !sobre || !horarios || !ingressos || !endereco || !foto || !iframe ) {
+  console.log(nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe)
+  if (!nome & !slug & !tipo & !sobre & !horarios & !ingressos & !endereco & !foto & !iframe ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 

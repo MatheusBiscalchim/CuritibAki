@@ -68,4 +68,4 @@ const deleteById = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, update, deleteById };
+export default { create, findAll, findById, deleteById };

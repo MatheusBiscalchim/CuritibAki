@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import userSerivce from '../services/user.serivce.js';
+import localsSerivce from '../services/locals.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -45,6 +46,24 @@ export const validUser = async (req,res,next) => {
 
   req.id = id;
   req.user = user;
+
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validLocal = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const local = await localsSerivce.findByIdService(id);
+
+  if (!local) {
+    return res.status(400).send({ message: "Local não encontrado" });
+  }
+
+  req.id = id;
+  req.locals = local;
 
   next();
 } catch (err) {
