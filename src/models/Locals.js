@@ -1,58 +1,44 @@
 import mongoose from 'mongoose';
 
-const LocalsSchema = new mongoose.Schema({
-  nome: {
+const LocaisSchema = new mongoose.Schema({
+  nome : {
     type: String,
-    required: true
+    required:true,
   },
-  slug: {
+  slug : {
     type: String,
-    required: true
+    required:true,
   },
-  tipo: {
+  tipo : {
     type: String,
-    required: true
+    required:true,
   },
-  sobre: {
+  sobre : {
     type: String,
-    required: true
+    required:true,
   },
-  horarios: {
+  horarios : {
     type: String,
-    required: true
+    required:true,
   },
-  ingressos: {
+  ingressos : {
     type: String,
-    required: true
+    required:true,
   },
-  endereco: {
+  endereco : {
     type: String,
-    required: true
+    required:true,
   },
-  nome: {
+  foto : {
     type: String,
-    required: true
+    required:true,
   },
-  foto: {
+  iframe : {
     type: String,
-    required: true
+    required:true,
   },
-  usuario: {
-    type: mongoose.Schema.Types.ObjectId(),
-    ref: "Usuario",
-    required: true
-  },
-  curtidas: {
-    type: Array,
-    required: false
-  },
-  comentarios: {
-    type: Array,
-    required: false
-  }
+})
 
-});
+const Locais = mongoose.model("Locais", LocaisSchema);
 
-const Locals = mongoose.Model("Locais", LocalsSchema);
-
-export default Locals;
+export default Locais;

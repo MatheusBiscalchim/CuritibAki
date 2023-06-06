@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import userRoute from './src/routes/user.route.js';
 import authRoute from  './src/routes/auth.route.js'
+import localsRoute from './src/routes/locals.route.js'
 
 dotenv.config();
 
@@ -14,5 +15,6 @@ connectDatabase();
 app.use(express.json());
 app.use("/user", userRoute);
 app.use("/auth", authRoute); 
+app.use("/locals", localsRoute)
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
