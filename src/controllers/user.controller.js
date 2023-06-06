@@ -23,7 +23,10 @@ const create = async(req,res)  => {
     }
   });
 } catch (err) {
-  res.status(500).send( {message: err.message})
+  if(err.message.includes('duplicate key error collection')) {
+    res.status(400).send( {message: 'Este email já está em uso'})
+  } else {
+  res.status(500).send( {message: err.message})}
 }
 };
   
@@ -80,7 +83,7 @@ const update = async(req,res) => {
     
 } catch (err) {
   if(err.message.includes('duplicate key error collection')) {
-    res.status(400).send( {message: 'Este email não pode ser cadastrado tente outro'})
+    res.status(400).send( {message: 'Este email já está em uso'})
   } else {
   res.status(500).send( {message: err.message})}
 }
