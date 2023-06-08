@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import localsController from '../controllers/locals.controller.js';
 import {validId,validLocal}  from '../middlewares/global.middlewares.js';
 

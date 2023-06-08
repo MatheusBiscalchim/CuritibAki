@@ -11,7 +11,7 @@ const create = async(req,res)  => {
   const user = await localsSerivce.createService(req.body);
 
   if (!user) {
-    return res.status(400).send({ message: "Erro na criação de usuário" });
+    return res.status(400).send({ message: "Erro na criação de local" });
   }
 
   res.status(201).send({

@@ -9,6 +9,6 @@ router.get('/', userController.findAll);
 router.get('/:id',validId,validUser, userController.findById);
 router.get('/email/:email',validEmail, userController.findByEmail);
 router.patch('/:id',validId,validUser, userController.update);
-router.delete('/:id',validId, userController.deleteById);
+router.delete('/:id',validId,validUser, userController.deleteById);
 
 export default  router;
