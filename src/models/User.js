@@ -24,6 +24,18 @@ UserSchema.pre("save", async function(next){
   next();
 });
 
+UserSchema.pre('findOneAndUpdate', async function(next) {
+  const update = this.getUpdate();
+  
+  const senha = update.senha;
+
+  if (senha) {
+    update.senha = await bcrypt.hash(senha, 10);
+  };
+
+  next();
+});
+
 const User = mongoose.model("Usuario", UserSchema);
 
 export default User;
