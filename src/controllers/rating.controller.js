@@ -37,7 +37,12 @@ const findAll = async(req,res)  => {
 
 const findById = async(req,res) => {
   try{
+    const id = req.id;
     const avaliacao = req.rating;
+
+    if(avaliacao.length === 0){
+      return res.status(400).send({message: "Não há avaliações neste local"});
+    }
 
   res.send(avaliacao);
 } catch (err) {
