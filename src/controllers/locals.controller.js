@@ -55,7 +55,7 @@ const findById = async(req,res) => {
   } catch (err) {
     res.status(500).send( {message: err.message})
   }
-  };
+};
 
 const update = async(req,res) => {
   try{const {nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;

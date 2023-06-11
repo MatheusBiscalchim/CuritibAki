@@ -61,4 +61,15 @@ const deleteById = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, deleteById };
+const deleteById2 = async(req,res) => {
+  try{const id = req.id;
+
+  await ratingSerivce.deleteService2(id);
+
+  res.status(200).send({message:"Avaliação deletada com sucesso"})
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export default { create, findAll, findById, deleteById, deleteById2 };
